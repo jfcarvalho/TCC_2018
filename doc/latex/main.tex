@@ -1,0 +1,134 @@
+\documentclass[11pt,oneside]{book}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\title{Per-chapter bibliographies with bibunits}
+
+\usepackage[a4paper]{geometry}
+
+\usepackage[sectionbib]{natbib}
+\usepackage{bibunits}
+%\defaultbibliographystyle{unsrtnat}  %% For numerical citations remember to pass "numbers" option to natbib
+\defaultbibliographystyle{dcu}
+\defaultbibliography{sample}
+
+
+%%% Uncomment if you change the bibliography heading/title
+% \renewcommand{\bibname}{References}
+
+%%% Uncomment if you want to include the bibliographies at the end of each chapter in the table of contents.  
+% \usepackage[nottoc]{tocbibind}
+
+\begin{document}
+
+%% Can only be called _after_ \begin{document}
+\bibliographyunit[\chapter]
+
+
+\frontmatter
+
+\chapter{Integração Contínua}
+
+\section{Conceitos e Definições}
+
+A \emph{Integração Contínua} é uma prática de desenvolvimento ágil de software voltado à integração de códigos fonte e demais artefatos de forma breve, rápida e com maior frequência,  sendo que é desejável a ocorrência desse processo no mínimo diariamente e, pelo menos, mais de uma vez por dia[Stahl and Bosch 2013]. Este é um conceito relativamente novo que vem conquistando cada vez mais espaço em práticas de desennvolvimento de software, ainda que existam desafios a serem superados para a sua aceitação se tornar um consenso geral. A Integração Contínua é constituída, no mínimo das seguintes ferramentas: um metódo para executar conjunto de trabalhos automatizados, denominado \emph{builds}, e um meio de se receber um \emph{feedback dos resultados} dessas execuções (por email, por exemplo).[Lauri Hukkanen 2015]   
+
+\subsection{Builds Automatizadas}
+
+Uma \emph{Build}, no contexto de \emph{Integração Contínua}, corresponde a um conjunto de processos automatizados que compilam códigos e executam testes de software[Travis CI]. Um processo de build é constituído por 3 etapas: configuração, compilação e empacotamento e essas três atividades são realizadas de maneira cíclica. É essecial que estas builds possuam um canal de comunicação exclusivo para exibição do seu status e que não acabe se misturando com demais informações relevantes. [Downs et al, 2010]  
+
+\section{Funcionamento Prático}
+
+\section{Problemas que a Integração Contínua tenta resolver}
+
+A idéia central da prática de integração é manter um ciclo de integrações de desenvolvimento constante, isto é, com maior frequência, evitando assim que se crie alguns típicos problemas enfrentados ao longo do processo de desenvolvimento de software, tais como altas cargas de trabalho, acúmulo de bugs (erros) no sistema, longos esforços de integração e imprevisibilidade na entrega de releases. Por meio de um alto nível de testes automatizados, a equipe envolvida diretamente na produção de sistemas tem um rápido feedback das modificações feitas, e caso esses sejam validados, são integradas ao corpo do software. Olhando produto de software como um todo e seus requisitos, a liberação de releases para clientes de forma breve, também, reduz a lacuna que pode se criar entre o entendimento do valor de software para o cliente e o modo como esse valor é interpretado pela organização [Lauri Hukkanen 2015]  
+
+\section{Benefícios de sua utilização}
+
+Os benefícios para se adotar a Integração Contínua são muitos. Pode-se descrever aqui, por exemplo, a melhoria no processo de \emph{Depuração de Código}, posto que os erros estão em pequenos incrementos de código, ao invés de se realizar a depuração no código fonte inteiro. Manter correções de \emph{bugs} em incremento permite evitar que erros que interferem uns nos outros sejam acumulados. Um outro benefício importante é que como o software é mantido constantemente em verificação de funcionamento, elimina-se o risco de integração na fase final do projeto, evitando conflitos de \emph{merge} de códigos que podem comprometer o sistema como um todo. Além do mais, manter uma boa cobertura de testes faz com que desenvolvedores trabalhem em um ambiente que lhe inspirem mais segurança de se trabalhar. 
+
+Abaixo segue alguns conceitos por [] que remetem a boas práticas na adoção de CI:
+
+\begin{enumerate}
+
+\item \textbf{Integração com Frequência} - Como mencionado anteriormente, manter uma integração frequente é essencial para que desenvolvedores se habituem a estar sempre sincronizando seus códigos. Quanto mais tempo um incremento ficar fora do projeto, maior será o esforço para conseguir sincronizá-lo.
+
+\item \textbf{Automação e Feedback} - Embora uma build quebrada possa parecer ter um sentido negativo, não deve-se interpretá-lo como um sinal ruim. O sistema de Integração Contína provê um ambiente de testes seguro contra erros que começa no início do processo e se extender até o seu lançamento.
+
+\item \textbf{Conserto imediato de bugs} - Uma build quebrada que não é dada a devida importância de se consertar brevemente ou acumular muitas builds quebradas deve ser sempre evitado. Por isso é essencial que sempre se mantenha um conjunto de builds executadas com status de sucesso.  
+
+
+\end{enumerate}
+
+
+\section{Desafios}
+
+Assim como a prática de integração possui diversos benefícios de utilização, temos também alguns desafios que tornam a implementação desta metodologia algo não tão trivial quanto se pode imaginar. [] enumera as principais:
+
+\begin{enumerate}
+
+\item \textbf{Técnicas e Automação de Testes} - Implementar uma técnica de integração eficiente requer também desenvolver testes eficientes, e isso muito esforço de implementação para que se alcance um nível satisfatório de testes não instáveis. 
+
+\item \textbf{Eficiência na comunicação} -
+A comunicação em um ambiente de \emph{Integração Contínua} é um requisito essencial, de modo que torna-se necessário obter um canal de comunicação entre pessoas envolvidas no processo de maneira eficente. Muitas vezes, quebra de \emph{builds} pode estar associadoa à falha de comunicação entre desenvolvedores.
+
+\item \textbf{Desenvolvimento distribuído} - Desenvolvedores trabalhando em diferentes locais são propícios a não se comunicarem de forma eficiente tal como o ambiente de \emph{Integração Contínua} exige. Em alguns casos a comunicação pessoal é mais eficiente para lidar com problemas específicos.
+
+\item \textbf{Resistência a mudanças} - Ainda existe muito ceticismo por parte de desenvolvedores antigos na adoção de prática de desenvolvimento ágil, e na \emph{Integração Contínua} não é diferente. Abandonar hábitos antigos por parte de desenvolvedores experientes não é uma tarefa fácil. Além do mais, a questão da transparência no processo de desenvolvimento deve ser amadurecida: muitos desenvolvedores se mostram resistentes a expor o seus códigos para outros prematuramente.
+
+\item \textbf{Arquitetura de Software} - Um outro obstáculo que pode interferir na implementação enficiente de CI são as Decisões de Arquitetura de Software quando se tem um acoplamento de componentes de software muito forte. Uma sutíl mudança arquitetural, nos casos de acomplamentos rígidos, pode ser propagado para muitos outros componentes, agravando mais ainda o esforço de sincronização.
+
+\item \textbf{Definições de Requisitos de Sotftware} - De antemão, o processo de integração requer a integração de pequenos incrementos, e o número de integrações é significativamente alta. Os requisitos, seguindo essa premissa, devem ser dividios também em incrementos, o que aumenta a quantidade de prioridades e as decisões que precisam ser tomadas em cada requisito. 
+
+\item \textbf{Gerenciar Dependências} - O desenvolvimento descentralizado dificulta o gerenciamento das dependências, tornando a coordenação das integrações feitas mais difícil. Sendo assim, é de extrema importância que os Componentes de Arquitetura de software esteja definidos claramente, sem ambiguidades ou propícios a falhas de interpretação. 
+
+
+
+\end{enumerate}
+
+\section{Travis CI}
+
+This is \emph{not} a full thesis template! It only demonstrates how to create per-chapter references using the \texttt{bibunits} package with BibTeX. (Do not use with BibLaTeX!)
+
+There are two possible ways to do this. One is by calling \verb|\bibliographyunit[\chapter]| after \verb|\begin{document}|, so that \texttt{bibunits} will automatically treat each chapter as a reference/bibliography unit. (This file uses this approach.) Another way is to put \verb|\begin{bibunit}...\end{bibunit}| around each chapter, or around arbitrary blocks of text, which may be useful if you need to put the references at the end of each \textit{part} instead of chapter! (The file \texttt{alt.tex} uses this approach.)
+
+If compiling on your own machine, run \texttt{bibtex} on \emph{each} generated \texttt{.aux} file, before running \texttt{pdflatex} twice more. (These are done automatically on Overleaf.)
+
+When using \texttt{bibunits}, you may get a warning \verb|I found no \citation commands| if all your chapters are in their own \texttt{.tex} files and there is no \verb|\cite| commands in the main \texttt{.tex} file itself. This warning can be ignored if that's how you intended things to be anyway.
+
+\tableofcontents
+
+\mainmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{First Chapter}
+
+\section{Section Heading}
+Here's a citation! \citep{latex:companion}
+
+\putbib
+%% You can use \pubib[anotherfile] if citations in this chapter is from anotherfile.bib instead
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Second Chapter}
+
+\section{Section Heading}
+Here's another citation! \citep{lshort}
+
+\putbib
+
+
+
+\backmatter
+
+%% A list of publications can be created using this approach
+\chapter*{List of Publications}
+\addcontentsline{toc}{chapter}{List of Publications}
+\nocite{lim:etal:kdtei:2016,markdown:overleaf}   % .bib keys of your own publications
+
+{\renewcommand{\bibsection}{}
+\putbib
+}
+
+\end{document}

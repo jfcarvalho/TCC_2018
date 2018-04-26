@@ -1,0 +1,75 @@
+\documentclass[11pt,oneside]{book}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\title{Per-chapter bibliographies with bibunit}
+
+\usepackage[a4paper]{geometry}
+
+\usepackage[sectionbib]{natbib}
+\usepackage{bibunits}
+%\defaultbibliographystyle{unsrtnat}  %% For numerical citations remember to pass "numbers" option to natbib
+\defaultbibliographystyle{dcu}
+\defaultbibliography{sample}
+
+
+%%% Uncomment if you change the bibliography heading/title
+% \renewcommand{\bibname}{References}
+
+%%% Uncomment if you want to include the bibliographies at the end of each chapter in the table of contents.  
+% \usepackage[nottoc]{tocbibind}
+
+\begin{document}
+
+\frontmatter
+
+\chapter*{Abstract}
+This is \emph{not} a full thesis template! It only demonstrates how to create per-chapter references using the \texttt{bibunits} package with BibTeX. (Do not use with BibLaTeX!)
+
+There are two possible ways to do this. One is by calling \verb|\bibliographyunit[\chapter]| after \verb|\begin{document}|, so that \texttt{bibunits} will automatically treat each chapter as a reference/bibliography unit. (The file \texttt{main.tex} uses this approach.) Another way is to put \verb|\begin{bibunit}...\end{bibunit}| around each chapter, or around arbitrary blocks of text, which may be useful if you need to put the references at the end of each \textit{part} instead of chapter! (This file uses this approach.)
+
+When using \texttt{bibunits}, you may get a warning \verb|I found no \citation commands| if all your chapters are in their own \texttt{.tex} files and there is no \verb|\cite| commands in the main \texttt{.tex} file itself. This warning can be ignored if that's how you intended things to be anyway.
+
+\tableofcontents
+
+\mainmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{First Chapter}
+
+\begin{bibunit}
+%% You can use \begin{bibunit}[style] if you need a different bibliography style for this bibunit
+\section{Section Heading}
+Here's a citation! \citep{latex:companion}
+
+\putbib
+%% You can use \pubib[anotherfile] if citations in this bibunit is from anotherfile.bib instead
+
+\end{bibunit}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Second Chapter}
+
+\begin{bibunit}
+\section{Section Heading}
+Here's another citation! \citep{lshort}
+
+\putbib
+\end{bibunit}
+
+
+\backmatter
+
+%% A list of publications can be created using this approach
+\begin{bibunit}
+\nocite{lim:etal:kdtei:2016,markdown:overleaf}   % .bib keys of your own publications
+
+\renewcommand{\bibsection}{%
+  \chapter*{List of Publications}
+  \addcontentsline{toc}{chapter}{List of Publications}
+}
+\putbib
+\end{bibunit}
+
+\end{document}
