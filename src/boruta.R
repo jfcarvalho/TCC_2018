@@ -1,6 +1,10 @@
 boruta_100 <- Boruta(build_successful~., data = arvore_dataset_100, doTrace = 2)
 print(boruta_100)
 
+boruta_500 <- Boruta(build_successful~., data = arvore_dataset_500, doTrace = 2)
+print(boruta_500)
+
+
 plot(boruta_100, xlab = "", xaxt = "n")
 lz<-lapply(1:ncol(boruta_100$ImpHistory),function(i)boruta_100$ImpHistory[is.finite(boruta_100$ImpHistory[,i]),i])
 names(lz) <- colnames(boruta_100$ImpHistory)
