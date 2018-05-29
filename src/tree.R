@@ -37,10 +37,10 @@ tree_100 = rpart(build_successful ~ ., data = arvore_dataset_100.treino, control
 predictions_arvore_100 <- predict(tree_100, newdata = arvore_dataset_100.teste)
 confusionMatrix(ifelse(predictions_arvore_100[,1] > 0.5, "false.", "true."), arvore_dataset_100.teste$build_successful)
 
-folds_500 <- createFolds(arvore_dataset_500, k=10, returnTrain = TRUE)
-folds_1000 <- createFolds(arvore_dataset_1000, k=10, returnTrain = TRUE)
-folds_100 <- createFolds(arvore_dataset_100, k=10, returnTrain = TRUE)
-folds_50 <- createFolds(arvore_dataset_50, k=10, returnTrain = TRUE)
+folds_500 <- createFolds(arvore_dataset_500$build_successful, k=10)
+folds_1000 <- createFolds(arvore_dataset_1000$build_successful, k=10)
+folds_100 <- createFolds(arvore_dataset_100$build_successful, k=10)
+folds_50 <- createFolds(arvore_dataset_50$build_successful, k=10)
 
 k <- 10
 dataset_cv_500 <- list()
@@ -59,10 +59,6 @@ for(i in 1:length(folds_500))
   predictions_cv_500[[i]] <- as.matrix(predict(tree_500, newdata = dataset_cv_500[[i]]))
   confusionMatrix(ifelse(predictions_cv_500[[i]][,1] > 0.5, "false.", "true."), dataset_cv_500[[i]]$build_successful)
 }
-
-#tree_500 = rpart(build_successful ~ ., data = arvore_dataset_500.treino, control = rpart.control(cp=0.00149092), method="class")
-#predictions_arvore_500_f8 <- predict(tree_500, newdata = arvore_dataset_500[folds_500$Fold8,])
-#confusionMatrix(ifelse(predictions_arvore_500_f8[,1] > 0.5, "false.", "true."), arvore_dataset_500[folds_500$Fold8,]$build_successful)
 
 for(i in 1:length(folds_1000))
 {

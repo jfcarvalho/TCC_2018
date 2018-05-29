@@ -21,6 +21,7 @@ library(caretEnsemble)
 library(kernlab)
 library(Boruta)
 library(doParallel)
+library(klaR)
 
 source("preprocessamento.R")
 source("correlacao.R")
