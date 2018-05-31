@@ -35,3 +35,12 @@ roc.curve(arvore_dataset_10.teste$build_successful, predictionsNB)
 predictionsNB_100 <- predict(stack.nb_100, newdata = as.data.frame(arvore_dataset_100.teste))
 accuracy.meas(arvore_dataset_100.teste$build_successful, predictionsNB_100)
 roc.curve(arvore_dataset_100.teste$build_successful, predictionsNB_100)
+
+# # BAGGING 
+
+parametro_controle <- trainControl(method="repeatedcv", number=10, repeats=3)
+
+set.seed(100)
+bagging <- train(build_successful~., data=arvore_dataset_100, method="treebag", metric="Accuracy", trControl=parametro_controle)
+bagging_rf <- train(build_successful~., data=arvore_dataset_100, method="rf", metric="Accuracy", trControl=parametro_controle)
+resultado_bagging <- resamples(list(treebag=bagging))
