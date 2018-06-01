@@ -43,3 +43,8 @@ parametro_controle <- trainControl(method="repeatedcv", number=10, repeats=3)
 set.seed(100)
 bagging <- train(build_successful~., data=arvore_dataset_100, method="treebag", metric="Accuracy", trControl=parametro_controle)
 bagging_rf <- train(build_successful~., data=arvore_dataset_100, method="rf", metric="Accuracy", trControl=parametro_controle)
+
+# # BOOSTING
+
+boosting_c50 <- train(build_successful~., data=arvore_dataset_100, method="C5.0", metric="Accuracy", trControl=parametro_controle)
+
