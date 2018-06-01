@@ -48,3 +48,12 @@ bagging_rf <- train(build_successful~., data=arvore_dataset_100, method="rf", me
 
 boosting_c50 <- train(build_successful~., data=arvore_dataset_100, method="C5.0", metric="Accuracy", trControl=parametro_controle)
 
+# # Curva ROC de Bagging e Boosting
+
+predictions_boosting <- predict(boosting_c50, newdata = as.data.frame(arvore_dataset_100.teste))
+accuracy.meas(arvore_dataset_100.teste$build_successful, predictions_boosting)
+roc.curve(arvore_dataset_100.teste$build_successful, predictions_boosting)
+
+predictions_bagging <- predict(bagging, newdata = as.data.frame(arvore_dataset_100.teste))
+accuracy.meas(arvore_dataset_100.teste$build_successful, predictions_bagging)
+roc.curve(arvore_dataset_100.teste$build_successful, predictions_bagging)
