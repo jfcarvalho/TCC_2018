@@ -16,21 +16,22 @@ results <- resamples(models)
 splom(results)
 
 stackControl <- trainControl(method="cv", number=10, classProbs=TRUE, savePredictions=TRUE)
-stack.rf <- caretStack(models, method="nb", metric="Accuracy", trControl=stackControl)
-stack.nb_100 <- caretStack(models_100, method="nb", metric="Accuracy", trControl=stackControl)
-stack.knn <- caretStack(models, method="knn", metric="Accuracy", trControl=stackControl)
 
-predictionsRP <- predict(stack.rpart, newdata = as.data.frame(arvore_dataset_10.teste))
-accuracy.meas(arvore_dataset_10.teste$build_successful, predictionsRP)
-roc.curve(arvore_dataset_10.teste$build_successful, predictionsRP)
+stack.nb <- caretStack(models_100, method="nb", metric="Accuracy", trControl=stackControl)
+stack.knn <- caretStack(models_100, method="knn", metric="Accuracy", trControl=stackControl)
+stack.rpart <- caretStack(models_100, method="rpart", metric="Accuracy", trControl=stackControl)
+
+predictionsRP <- predict(stack.rpart, newdata = as.data.frame(arvore_dataset_100.teste))
+accuracy.meas(arvore_dataset_100.teste$build_successful, predictionsRP)
+roc.curve(arvore_dataset_100.teste$build_successful, predictionsRP)
 
 predictionsKNN <- predict(stack.knn, newdata = as.data.frame(arvore_dataset_10.teste))
 accuracy.meas(arvore_dataset_10.teste$build_successful, predictionsKNN)
 roc.curve(arvore_dataset_10.teste$build_successful, predictionsKNN)
 
-predictionsNB <- predict(stack.rf, newdata = as.data.frame(arvore_dataset_10.teste))
-accuracy.meas(arvore_dataset_10.teste$build_successful, predictionsNB)
-roc.curve(arvore_dataset_10.teste$build_successful, predictionsNB)
+predictionsNB <- predict(stack.nb, newdata = as.data.frame(arvore_dataset_100.teste))
+accuracy.meas(arvore_dataset_100.teste$build_successful, predictionsNB)
+roc.curve(arvore_dataset_100.teste$build_successful, predictionsNB)
 
 predictionsNB_100 <- predict(stack.nb_100, newdata = as.data.frame(arvore_dataset_100.teste))
 accuracy.meas(arvore_dataset_100.teste$build_successful, predictionsNB_100)
@@ -38,11 +39,7 @@ roc.curve(arvore_dataset_100.teste$build_successful, predictionsNB_100)
 
 # # BAGGING 
 
-parametro_controle <- trainControl(method="repeatedcv", number=10, repeats=3)
-
-set.seed(100)
 bagging <- train(build_successful~., data=arvore_dataset_100, method="treebag", metric="Accuracy", trControl=parametro_controle)
-bagging_rf <- train(build_successful~., data=arvore_dataset_100, method="rf", metric="Accuracy", trControl=parametro_controle)
 
 # # BOOSTING
 
@@ -57,3 +54,6 @@ roc.curve(arvore_dataset_100.teste$build_successful, predictions_boosting)
 predictions_bagging <- predict(bagging, newdata = as.data.frame(arvore_dataset_100.teste))
 accuracy.meas(arvore_dataset_100.teste$build_successful, predictions_bagging)
 roc.curve(arvore_dataset_100.teste$build_successful, predictions_bagging)
+
+
+confusionMatrix(ifelse(predictions_bagging > 0.5, "false.", "true."), arvore_dataset_100.teste$build_successful)
