@@ -55,3 +55,25 @@ for(i in 1:length(projetos_split_javascript))
     j <- j+1
     }
 }
+acumulador_maximo_java <- 0
+for(i in 1:length(projetos_80m_java_false))
+{
+  acumulador_maximo_java <- acumulador_maximo_java + summary(projetos_80m_java_false[[i]]$git_diff_test_churn)[[6]]
+}
+
+acumulador_maximo_ruby <- 0
+for(i in 1:length(projetos_80m_ruby_false))
+{
+  acumulador_maximo_ruby <- acumulador_maximo_ruby + summary(projetos_80m_ruby_false[[i]]$git_diff_test_churn)[[6]]
+}
+
+for(i in 1:length(projetos_80m_java_false))
+{
+  acumulador_maximo_java <- acumulador_maximo_java + summary(projetos_80m_java_false[[i]]$git_diff_src_churn)[[6]]
+}
+
+for(i in 1:length(projetos_80m_ruby_false))
+{
+  acumulador_maximo_ruby <- acumulador_maximo_ruby + summary(projetos_80m_ruby_false[[i]]$git_diff_src_churn)[[6]]
+}
+
