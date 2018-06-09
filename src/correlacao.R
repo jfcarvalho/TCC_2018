@@ -45,7 +45,7 @@ travis_corr_5$tr_build_id <- NULL
 
 # Correlação entre variáveis
 
-cores <- colorRampPalette(c("yellow", "gray", "black"))
+cores <- colorRampPalette(c("red", "gray", "blue"))
 
 correlacao_1000 <- cor(travis_corr_1000[,c(1:18)])
 corrplot(correlacao, order="AOE", method="circle", col=cores(20), tl.srt=45, tl.cex=0.35, tl.col="black")
@@ -59,7 +59,7 @@ corrplot(correlacao_500, add=TRUE, type="lower", method="number", order="AOE", c
 correlacao_100 <- cor(travis_corr_100[,c(1:18)])
 
 corrplot(correlacao_100, order="AOE", method="circle", col=cores(20), tl.srt=45, tl.cex=0.75, tl.col="black")
-corrplot(correlacao_100, add=TRUE, type="lower", method="number", order="AOE", col="black", diag=FALSE, tl.pos="n", cl.pos="n", number.cex=0.55)
+corrplot(correlacao_100, add=TRUE, type="lower", method="number", order="AOE", col="black", diag=FALSE, tl.pos="n", cl.pos="n", number.cex=0.50)
 
 correlacao_50 <- cor(travis_corr_50[,c(1:18)])
 corrplot(correlacao_50, order="AOE", method="circle", col=cores(20), tl.srt=45, tl.cex=0.75, tl.col="black")
