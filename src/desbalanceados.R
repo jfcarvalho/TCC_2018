@@ -84,6 +84,7 @@ java_smote <- projetos_80m_java_false[[5]]
 
 java.rose <- ROSE(build_successful~ ., data = java.rose.treino, seed = 1)$data
 
+
 tree_java.rose <- rpart(build_successful ~ ., data = java.rose)
 pred.tree_java.rose <- predict(tree_java.rose, newdata = java.rose.treino)
 
@@ -104,5 +105,32 @@ roc.curve(projeto_smote_java.teste$build_successful, pred.tree_java.smote[,2])
 accuracy.meas(projeto_smote_java.teste$build_successful, pred.tree_java.smote[,2])
 
 
-pred.tree_java.smote_proj1 <- predict(tree_java.smote, newdata = projeto_1.teste)
-confusionMatrix(ifelse(pred.tree_java.smote_proj1[,1] > 0.5, "false.", "true."), projeto_1.teste$build_successful, positive="true.")
+#####################################
+
+ruby.rose.dataset <- projetos_80m_ruby_false[[8]]
+
+ruby.rose <- ROSE(build_successful~ ., data = rose_ruby, seed = 1)$data
+ruby.smote <- SMOTE(build_successful~ ., data=as.data.frame(rose_ruby), perc.over = 100, perc.under=200)
+
+trainIndex_rose_ruby <- createDataPartition(ruby.rose$build_successful, p=0.80, list=FALSE)
+ruby.rose.treino <- ruby.rose[trainIndex_rose_ruby,]
+ruby.rose.teste <- ruby.rose[-trainIndex_rose_java,]
+
+tree_ruby.rose <- rpart(build_successful ~ ., data = ruby.rose.treino)
+pred.tree_rose.ruby <- predict(tree_ruby.rose, newdata = ruby.rose.teste)
+confusionMatrix(ifelse(pred.tree_rose.ruby[,1] > 0.5, "false.", "true."), ruby.rose.teste$build_successful, positive="true.")
+
+roc.curve(ruby.rose.teste$build_successful, pred.tree_rose.ruby[,2])
+accuracy.meas(ruby.rose.teste$build_successful, pred.tree_rose.ruby[,2])
+
+
+trainIndex_smote_ruby <- createDataPartition(ruby.smote$build_successful, p=0.80, list=FALSE)
+ruby.smote.treino <- ruby.smote[trainIndex_smote_ruby,]
+ruby.smote.teste <- ruby.smote[-trainIndex_smote_ruby,]
+
+tree_ruby.smote <- rpart(build_successful ~ ., data = ruby.smote.treino)
+pred.tree_smote.ruby <- predict(tree_ruby.smote, newdata = ruby.smote.teste)
+confusionMatrix(ifelse(pred.tree_smote.ruby[,1] > 0.5, "false.", "true."), ruby.smote.teste$build_successful, positive="true.")
+
+roc.curve(ruby.smote.teste$build_successful, pred.tree_smote.ruby[,2])
+accuracy.meas(ruby.smote.teste$build_successful, pred.tree_smote.ruby[,2])
