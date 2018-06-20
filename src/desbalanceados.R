@@ -134,3 +134,11 @@ confusionMatrix(ifelse(pred.tree_smote.ruby[,1] > 0.5, "false.", "true."), ruby.
 
 roc.curve(ruby.smote.teste$build_successful, pred.tree_smote.ruby[,2])
 accuracy.meas(ruby.smote.teste$build_successful, pred.tree_smote.ruby[,2])
+
+####################################################################
+
+under_completo_100 <- ovun.sample(build_successful ~ ., data = amostra_travis_100, method = "under", N = 87126, seed = 1)$data
+under_completo_500 <- ovun.sample(build_successful ~ ., data = amostra_travis_500, method = "under", N = 210230, seed = 1)$data
+under_completo_50 <- ovun.sample(build_successful ~ ., data = amostra_travis_50, method = "under", N = 62032, seed = 1)$data
+
+over_completo <- ovun.sample(build_successful ~ ., data = travis_selecionado, method = "over", N = 800000, seed = 1)$data

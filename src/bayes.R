@@ -1,5 +1,11 @@
-nb_dataset_1000 <- arvore_dataset_1000
-nb_dataset_500 <- arvore_dataset_500
+nb_dataset_total.treino <- arvore_dataset.treino
+nb_dataset_total.teste <- arvore_dataset.teste
+
+nb_dataset_total.teste$gh_is_pr<- NULL
+nb_dataset_total.teste$gh_by_core_team_member <- NULL
+nb_dataset_total.treino$gh_is_pr <- NULL
+nb_dataset_total.treino$gh_by_core_team_member <- NULL
+
 nb_dataset_50 <- arvore_dataset_50
 
 nb_dataset_1000$gh_lang <- as.factor(nb_dataset_1000$gh_lang)
@@ -45,6 +51,12 @@ predictions_cv_50_nb <- list()
 lista_preditores_nb_500 <- list()
 lista_preditores_nb_1000 <- list()
 lista_preditores_nb_100 <- list()
+
+## Aplicando algoritmo no dataset todo
+
+nb_total <- NaiveBayes(build_successful~., data=nb_dataset_total.treino, usekernel=TRUE)
+predictions_nb <- predict(nb_total, nb_dataset_total.teste)
+confusionMatrix(predictions_nb$class, nb_dataset_total.teste$build_successful)
 
 model_nb_100 <- NaiveBayes(build_successful~., data=nb_dataset_100.treino)
 predictions_100 <- predict(model_nb_100, folds_100_nb)
@@ -112,3 +124,34 @@ for(i in 1:length(folds_50))
   predictions_cv_50[[i]] <- as.matrix(predict(tree_50, newdata = dataset_cv_50[[i]]))
   confusionMatrix(ifelse(predictions_cv_50[[i]][,1] > 0.5, "false.", "true."), dataset_cv_50[[i]]$build_successful)
 }
+
+# # Cross Validation
+
+model_nb <- train(build_successful~., data=nb_dataset_total.treino, trControl=t_tree, method="nb")
+predictions_nb_total_cv <- predict(model_nb, newdata = nb_dataset_total.teste)
+confusionMatrix(nb_dataset_total.teste$build_successful, predict(model_nb, nb_dataset_total.teste), positive="true.")
+
+Undersampling
+
+trainIndex_total_undersampling_100 <- createDataPartition(under_completo_100$build_successful, p=0.80, list=FALSE)
+nb_dataset_under_100.treino <- under_completo_100[ trainIndex_total_undersampling_100,]
+nb_dataset_under_100.teste <- under_completo_100[-trainIndex_total_undersampling_100,]
+model_under_nb_100 <- train(build_successful~., data=nb_dataset_under_100.treino, trControl=t_tree, method="nb")
+predictions_arvore_under_cv <- predict(model_under, newdata = arvore_dataset_under.teste)
+confusionMatrix(nb_dataset_under_100.teste$build_successful, predict(model_under_nb_100, nb_dataset_under_100.teste), positive="true.")
+
+trainIndex_total_undersampling_500 <- createDataPartition(under_completo_500$build_successful, p=0.80, list=FALSE)
+nb_dataset_under_500.treino <- under_completo_500[ trainIndex_total_undersampling_500,]
+nb_dataset_under_500.teste <- under_completo_500[-trainIndex_total_undersampling_500,]
+model_under_nb_500 <- train(build_successful~., data=nb_dataset_under_500.treino, trControl=t_tree, method="nb")
+predictions_arvore_under_cv <- predict(model_under_500, newdata = arvore_dataset_under.teste)
+confusionMatrix(nb_dataset_under_500.teste$build_successful, predict(model_under_nb_500, nb_dataset_under_500.teste), positive="true.")
+
+trainIndex_total_undersampling_50 <- createDataPartition(under_completo_50$build_successful, p=0.80, list=FALSE)
+nb_dataset_under_50.treino <- under_completo_50[ trainIndex_total_undersampling_50,]
+nb_dataset_under_50.teste <- under_completo_50[-trainIndex_total_undersampling_50,]
+model_under_50 <- train(build_successful~., data=nb_dataset_under_50.treino, trControl=t_tree, method="nb")
+predictions_arvore_under_cv <- predict(model_under_50, newdata = arvore_dataset_under.teste)
+confusionMatrix(nb_dataset_under_50.teste$build_successful, predict(model_under_50, nb_dataset_under_50.teste), positive="true.")
+
+

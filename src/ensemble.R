@@ -11,9 +11,11 @@ models <- caretList(build_successful~., data=arvore_dataset_10.treino, trControl
 models_100 <- caretList(build_successful~., data=arvore_dataset_100.treino, trControl=trainControl_100, methodList=algorithmList)
 
 # Resultado (precisamos passar um list de modelos treinados com Train)
-results <- resamples(models)
+resultados <- resamples(models_100)
 
-splom(results)
+splom(resultados)
+scales <- list(x=list(relation="free"), y=list(relation="free"))
+bwplot(resultados, scales=scales)
 
 stackControl <- trainControl(method="cv", number=10, classProbs=TRUE, savePredictions=TRUE)
 
@@ -57,3 +59,8 @@ roc.curve(arvore_dataset_100.teste$build_successful, predictions_bagging)
 
 
 confusionMatrix(ifelse(predictions_bagging > 0.5, "false.", "true."), arvore_dataset_100.teste$build_successful)
+
+confusionMatrix(travis_selecionado$build_successful, predict(bagging, travis_selecionado), positive="true.")
+confusionMatrix(travis_selecionado$build_successful, predict(boosting_c50, travis_selecionado), positive="true.")
+confusionMatrix(travis_selecionado$build_successful, predict(stack.rpart, travis_selecionado), positive="true.")
+confusionMatrix(travis_selecionado$build_successful, predict(stack.nb, travis_selecionado), positive="true.")
