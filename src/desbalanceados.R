@@ -141,4 +141,14 @@ under_completo_100 <- ovun.sample(build_successful ~ ., data = amostra_travis_10
 under_completo_500 <- ovun.sample(build_successful ~ ., data = amostra_travis_500, method = "under", N = 210230, seed = 1)$data
 under_completo_50 <- ovun.sample(build_successful ~ ., data = amostra_travis_50, method = "under", N = 62032, seed = 1)$data
 
-over_completo <- ovun.sample(build_successful ~ ., data = travis_selecionado, method = "over", N = 800000, seed = 1)$data
+over_completo_500 <- ovun.sample(build_successful ~ ., data = amostra_travis_500, method = "over", N = 400000, seed = 1)$data
+over_completo_100 <- ovun.sample(build_successful ~ ., data = amostra_travis_100, method = "over", N = 200000, seed = 1)$data
+over_completo_50 <- ovun.sample(build_successful ~ ., data = amostra_travis_50, method = "over", N = 120000, seed = 1)$data
+
+smote_500 <- SMOTE(build_successful~ ., data=as.data.frame(amostra_travis_500), perc.over = 100, perc.under=200)
+smote_100 <- SMOTE(build_successful~ ., data=as.data.frame(amostra_travis_100), perc.over = 100, perc.under=200)
+smote_50 <- SMOTE(build_successful~ ., data=as.data.frame(amostra_travis_50), perc.over = 100, perc.under=200)
+
+rose_500 <- ROSE(build_successful~ ., data = amostra_travis_500, seed = 1)$data
+rose_100 <- ROSE(build_successful~ ., data = amostra_travis_100, seed = 1)$data
+rose_50 <- ROSE(build_successful~ ., data = amostra_travis_50, seed = 1)$data

@@ -147,3 +147,60 @@ for (i in length(folds_100_knn))
 model_knn <- train(build_successful~., data=nb_dataset_total.treino, trControl=t_tree, method="knn")
 confusionMatrix(nb_dataset_total.teste$build_successful, predict(model_knn, nb_dataset_total.teste), positive="true.")
 
+smote_scaled <- scale(smote_500[,-19])
+smote_scaled <- cbind(smote_scaled, smote_500[,19])
+smote_scaled_100 <- scale(smote_100[,-19])
+smote_scaled_100 <- as.data.frame(smote_scaled_100)
+smote_scaled_100 <- cbind(smote_scaled_100, smote_100[,19])
+smote_scaled_50 <- scale(smote_50[,-19])
+smote_scaled_50 <- as.data.frame(smote_scaled_50)
+smote_scaled_50 <- cbind(smote_scaled_50, smote_50[,19])
+
+# # UnderSampling
+
+trainIndex_total_undersampling_100 <- createDataPartition(under_completo_100$build_successful, p=0.80, list=FALSE)
+knn_dataset_under_100.treino <- under_completo_100[ trainIndex_total_undersampling_100,]
+knn_dataset_under_100.teste <- under_completo_100[-trainIndex_total_undersampling_100,]
+model_under_knn_100 <- train(build_successful~., data=knn_dataset_under_100.treino, trControl=t_tree, method="knn")
+confusionMatrix(knn_dataset_under_100.teste$build_successful, predict(model_under_knn_100, knn_dataset_under_100.teste), positive="true.")
+
+trainIndex_total_undersampling_500 <- createDataPartition(under_completo_500$build_successful, p=0.80, list=FALSE)
+knn_dataset_under_500.treino <- under_completo_500[ trainIndex_total_undersampling_500,]
+knn_dataset_under_500.teste <- under_completo_500[-trainIndex_total_undersampling_500,]
+model_under_knn_500 <- train(build_successful~., data=knn_dataset_under_500.treino, trControl=t_tree, method="knn")
+confusionMatrix(knn_dataset_under_500.teste$build_successful, predict(model_under_knn_500, knn_dataset_under_500.teste), positive="true.")
+
+trainIndex_total_undersampling_50 <- createDataPartition(under_completo_50$build_successful, p=0.80, list=FALSE)
+knn_dataset_under_50.treino <- under_completo_50[ trainIndex_total_undersampling_50,]
+knn_dataset_under_50.teste <- under_completo_50[-trainIndex_total_undersampling_50,]
+model_under_knn_50 <- train(build_successful~., data=knn_dataset_under_50.treino, trControl=t_tree, method="knn")
+confusionMatrix(knn_dataset_under_50.teste$build_successful, predict(model_under_knn_50, knn_dataset_under_50.teste), positive="true.")
+
+# # SMOTE
+
+trainIndex_total_scaled_500 <- createDataPartition(smote_scaled$build_successful, p=0.80, list=FALSE)
+knn_dataset_smote_500.treino <- smote_scaled[ trainIndex_total_scaled_500,]
+knn_dataset_smote_500.teste <- smote_scaled[-trainIndex_total_scaled_500,]
+model_smote_knn_500 <- train(build_successful~., data=knn_dataset_smote_500.treino, trControl=t_tree, method="knn")
+confusionMatrix(knn_dataset_smote_500.teste$build_successful, predict(model_smote_knn_500, knn_dataset_smote_500.teste), positive="true.")
+
+
+trainIndex_total_scaled_100 <- createDataPartition(smote_scaled_100$build_successful, p=0.80, list=FALSE)
+knn_dataset_smote_100.treino <- smote_scaled_100[ trainIndex_total_scaled_100,]
+knn_dataset_smote_100.teste <- smote_scaled_100[-trainIndex_total_scaled_100,]
+model_smote_knn_100 <- train(build_successful~., data=knn_dataset_smote_100.treino, trControl=t_tree, method="knn")
+confusionMatrix(knn_dataset_smote_100.teste$build_successful, predict(model_smote_knn_100, knn_dataset_smote_100.teste), positive="true.")
+
+trainIndex_total_scaled_50 <- createDataPartition(smote_scaled_50$build_successful, p=0.80, list=FALSE)
+knn_dataset_smote_50.treino <- smote_scaled_50[ trainIndex_total_scaled_50,]
+knn_dataset_smote_50.teste <- smote_scaled_50[-trainIndex_total_scaled_50,]
+model_smote_knn_50 <- train(build_successful~., data=knn_dataset_smote_50.treino, trControl=t_tree, method="knn")
+confusionMatrix(knn_dataset_smote_50.teste$build_successful, predict(model_smote_knn_50, knn_dataset_smote_50.teste), positive="true.")
+
+trainIndex_total <- createDataPartition(travis_selecionado$build_successful, p=0.90, list=FALSE)
+knn_dataset_smote_50.treino <- smote_scaled_50[ trainIndex_total_scaled_50,]
+knn_dataset.teste <- travis_selecionado[-trainIndex_total,]
+model_smote_knn <- train(build_successful~., data=knn_dataset_smote_50.treino, trControl=t_tree, method="knn")
+confusionMatrix(scaled_total$build_successful, predict(model_smote_knn_500, scaled_total), positive="true.")
+
+roc.curve(knn_dataset_smote_50.teste$build_successful, predict(model_smote_knn_50, knn_dataset_smote_50.teste))

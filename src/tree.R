@@ -132,10 +132,58 @@ confusionMatrix(arvore_dataset_under_50.teste$build_successful, predict(model_un
 
 Oversamplng
 
-trainIndex_total_oversampling <- createDataPartition(over_completo$build_successful, p=0.60, list=FALSE)
-arvore_dataset_over.treino <- over_completo[ trainIndex_total_oversampling,]
-arvore_dataset_over.teste <- over_completo[-trainIndex_total_oversampling,]
-model_over <- train(build_successful~., data=arvore_dataset_over.treino, trControl=t_tree, method="rpart")
-predictions_arvore_over_cv <- predict(model_over, newdata = arvore_dataset_over.teste)
-confusionMatrix(arvore_dataset_over.teste$build_successful, predict(model_over, arvore_dataset_over.teste), positive="true.")
+trainIndex_total_oversampling_500 <- createDataPartition(over_completo_500$build_successful, p=0.80, list=FALSE)
+arvore_dataset_over_500.treino <- over_completo_500[ trainIndex_total_oversampling_500,]
+arvore_dataset_over_500.teste <- over_completo_500[-trainIndex_total_oversampling_500,]
+model_over_500 <- train(build_successful~., data=arvore_dataset_over_500.treino, trControl=t_tree, method="rpart")
+predictions_arvore_under_cv <- predict(model_under_50, newdata = arvore_dataset_under.teste)
+confusionMatrix(arvore_dataset_over_500.teste$build_successful, predict(model_over_500, arvore_dataset_over_500.teste), positive="true.")
 
+trainIndex_total_oversampling_100 <- createDataPartition(over_completo_100$build_successful, p=0.80, list=FALSE)
+arvore_dataset_over_100.treino <- over_completo_100[ trainIndex_total_oversampling_100,]
+arvore_dataset_over_100.teste <- over_completo_100[-trainIndex_total_oversampling_100,]
+model_over_100 <- train(build_successful~., data=arvore_dataset_over_100.treino, trControl=t_tree, method="rpart")
+predictions_arvore_under_cv <- predict(model_under_50, newdata = arvore_dataset_under.teste)
+confusionMatrix(arvore_dataset_over_100.teste$build_successful, predict(model_over_100, arvore_dataset_over_100.teste), positive="true.")
+
+trainIndex_total_SMOTE_500 <- createDataPartition(smote_500$build_successful, p=0.80, list=FALSE)
+arvore_dataset_smote_500.treino <- smote_500[ trainIndex_total_SMOTE_500,]
+arvore_dataset_smote_500.teste <- smote_500[-trainIndex_total_SMOTE_500,]
+model_smote_500 <- train(build_successful~., data=arvore_dataset_smote_500.treino, trControl=t_tree, method="rpart")
+predictions_arvore_under_cv <- predict(model_under_50, newdata = arvore_dataset_under.teste)
+confusionMatrix(arvore_dataset_smote_500.teste$build_successful, predict(model_smote_500, arvore_dataset_smote_500.teste), positive="true.")
+
+trainIndex_total_SMOTE_100 <- createDataPartition(smote_100$build_successful, p=0.80, list=FALSE)
+arvore_dataset_smote_100.treino <- smote_100[ trainIndex_total_SMOTE_100,]
+arvore_dataset_smote_100.teste <- smote_100[-trainIndex_total_SMOTE_100,]
+model_smote_100 <- train(build_successful~., data=arvore_dataset_smote_100.treino, trControl=t_tree, method="rpart")
+predictions_arvore_under_cv <- predict(model_under_50, newdata = arvore_dataset_under.teste)
+confusionMatrix(arvore_dataset_smote_100.teste$build_successful, predict(model_smote_100, arvore_dataset_smote_100.teste), positive="true.")
+
+trainIndex_total_SMOTE_50 <- createDataPartition(smote_50$build_successful, p=0.80, list=FALSE)
+arvore_dataset_smote_50.treino <- smote_50[ trainIndex_total_SMOTE_50,]
+arvore_dataset_smote_50.teste <- smote_50[-trainIndex_total_SMOTE_50,]
+model_smote_50 <- train(build_successful~., data=arvore_dataset_smote_50.treino, trControl=t_tree, method="rpart")
+predictions_arvore_under_cv <- predict(model_under_50, newdata = arvore_dataset_under.teste)
+confusionMatrix(arvore_dataset_smote_50.teste$build_successful, predict(model_smote_50, arvore_dataset_smote_50.teste), positive="true.")
+
+trainIndex_total_ROSE_500 <- createDataPartition(rose_500$build_successful, p=0.80, list=FALSE)
+arvore_dataset_rose_500.treino <- rose_500[ trainIndex_total_ROSE_500,]
+arvore_dataset_rose_500.teste <- rose_500[-trainIndex_total_ROSE_500,]
+model_rose_500 <- train(build_successful~., data=arvore_dataset_rose_500.treino, trControl=t_tree, method="rpart")
+predictions_arvore_under_cv <- predict(model_under_50, newdata = arvore_dataset_under.teste)
+confusionMatrix(arvore_dataset_rose_500.teste$build_successful, predict(model_rose_500, arvore_dataset_rose_500.teste), positive="true.")
+
+trainIndex_total_ROSE_100 <- createDataPartition(rose_100$build_successful, p=0.80, list=FALSE)
+arvore_dataset_rose_100.treino <- rose_100[ trainIndex_total_ROSE_100,]
+arvore_dataset_rose_100.teste <- rose_100[-trainIndex_total_ROSE_100,]
+model_rose_100 <- train(build_successful~., data=arvore_dataset_rose_100.treino, trControl=t_tree, method="rpart")
+predictions_arvore_under_cv <- predict(model_under_50, newdata = arvore_dataset_under.teste)
+confusionMatrix(arvore_dataset_rose_100.teste$build_successful, predict(model_rose_100, arvore_dataset_rose_100.teste), positive="true.")
+
+trainIndex_total_ROSE_50 <- createDataPartition(rose_50$build_successful, p=0.80, list=FALSE)
+arvore_dataset_rose_50.treino <- rose_50[ trainIndex_total_ROSE_50,]
+arvore_dataset_rose_50.teste <- rose_50[-trainIndex_total_ROSE_50,]
+model_rose_50 <- train(build_successful~., data=arvore_dataset_rose_50.treino, trControl=t_tree, method="rpart")
+predictions_arvore_under_cv <- predict(model_under_50, newdata = arvore_dataset_under.teste)
+confusionMatrix(arvore_dataset_rose_50.teste$build_successful, predict(model_rose_50, arvore_dataset_rose_50.teste), positive="true.")
