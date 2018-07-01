@@ -187,3 +187,50 @@ arvore_dataset_rose_50.teste <- rose_50[-trainIndex_total_ROSE_50,]
 model_rose_50 <- train(build_successful~., data=arvore_dataset_rose_50.treino, trControl=t_tree, method="rpart")
 predictions_arvore_under_cv <- predict(model_under_50, newdata = arvore_dataset_under.teste)
 confusionMatrix(arvore_dataset_rose_50.teste$build_successful, predict(model_rose_50, arvore_dataset_rose_50.teste), positive="true.")
+
+# # CURVA ROC / PRECISION
+
+accuracy.meas(arvore_dataset_under_500.teste$build_successful, predict(model_under_500, arvore_dataset_under_500.teste))
+roc.curve(arvore_dataset_under_500.teste$build_successful, predict(model_under_500, arvore_dataset_under_500.teste))
+
+accuracy.meas(arvore_dataset_under_100.teste$build_successful, predict(model_under_100, arvore_dataset_under_100.teste))
+roc.curve(arvore_dataset_under_100.teste$build_successful, predict(model_under_100, arvore_dataset_under_100.teste))
+
+accuracy.meas(arvore_dataset_under_50.teste$build_successful, predict(model_under_50, arvore_dataset_under_50.teste))
+roc.curve(arvore_dataset_under_50.teste$build_successful, predict(model_under_50, arvore_dataset_under_50.teste))
+
+accuracy.meas(arvore_dataset_over_500.teste$build_successful, predict(model_over_500, arvore_dataset_over_500.teste))
+roc.curve(arvore_dataset_over_500.teste$build_successful, predict(model_over_500, arvore_dataset_over_500.teste))
+
+accuracy.meas(arvore_dataset_over_100.teste$build_successful, predict(model_over_100, arvore_dataset_over_100.teste))
+roc.curve(arvore_dataset_over_100.teste$build_successful, predict(model_over_100, arvore_dataset_over_100.teste))
+
+accuracy.meas(arvore_dataset_over_50.teste$build_successful, predict(model_over_50, arvore_dataset_over_50.teste))
+roc.curve(arvore_dataset_over_50.teste$build_successful, predict(model_over_50, arvore_dataset_over_50.teste))
+
+accuracy.meas(arvore_dataset_smote_500.teste$build_successful, predict(model_smote_500, arvore_dataset_smote_500.teste))
+roc.curve(arvore_dataset_smote_500.teste$build_successful, predict(model_smote_500, arvore_dataset_smote_500.teste))
+
+accuracy.meas(arvore_dataset_smote_100.teste$build_successful, predict(model_smote_100, arvore_dataset_smote_100.teste))
+roc.curve(arvore_dataset_smote_100.teste$build_successful, predict(model_smote_100, arvore_dataset_smote_100.teste))
+
+accuracy.meas(arvore_dataset_smote_50.teste$build_successful, predict(model_smote_50, arvore_dataset_smote_50.teste))
+roc.curve(arvore_dataset_smote_50.teste$build_successful, predict(model_smote_50, arvore_dataset_smote_50.teste))
+
+accuracy.meas(arvore_dataset_rose_500.teste$build_successful, predict(model_rose_500, arvore_dataset_rose_500.teste))
+roc.curve(arvore_dataset_rose_500.teste$build_successful, predict(model_rose_500, arvore_dataset_rose_500.teste))
+
+accuracy.meas(arvore_dataset_rose_100.teste$build_successful, predict(model_rose_100, arvore_dataset_rose_100.teste))
+roc.curve(arvore_dataset_rose_100.teste$build_successful, predict(model_rose_100, arvore_dataset_rose_100.teste))
+
+accuracy.meas(arvore_dataset_rose_50.teste$build_successful, predict(model_rose_50, arvore_dataset_rose_50.teste))
+roc.curve(arvore_dataset_rose_50.teste$build_successful, predict(model_rose_50, arvore_dataset_rose_50.teste))
+
+accuracy.meas(arvore_dataset_100.teste$build_successful, predict(bagging, arvore_dataset_100.teste))
+roc.curve(arvore_dataset_100.teste$build_successful, predict(bagging, arvore_dataset_100.teste))
+
+accuracy.meas(arvore_dataset_100.teste$build_successful, predict(boosting_c50, arvore_dataset_100.teste))
+roc.curve(arvore_dataset_100.teste$build_successful, predict(bagging, arvore_dataset_100.teste))
+
+accuracy.meas(arvore_dataset_100.teste$build_successful, predict(boosting_c50, arvore_dataset_100.teste))
+roc.curve(arvore_dataset_100.teste$build_successful, predict(boosting_c50, arvore_dataset_100.teste))

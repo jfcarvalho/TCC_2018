@@ -158,23 +158,43 @@ smote_scaled_50 <- cbind(smote_scaled_50, smote_50[,19])
 
 # # UnderSampling
 
-trainIndex_total_undersampling_100 <- createDataPartition(under_completo_100$build_successful, p=0.80, list=FALSE)
-knn_dataset_under_100.treino <- under_completo_100[ trainIndex_total_undersampling_100,]
-knn_dataset_under_100.teste <- under_completo_100[-trainIndex_total_undersampling_100,]
+trainIndex_total_undersampling_100 <- createDataPartition(under_100_scaled$build_successful, p=0.80, list=FALSE)
+knn_dataset_under_100.treino <- under_100_scaled[ trainIndex_total_undersampling_100,]
+knn_dataset_under_100.teste <- under_100_scaled[-trainIndex_total_undersampling_100,]
 model_under_knn_100 <- train(build_successful~., data=knn_dataset_under_100.treino, trControl=t_tree, method="knn")
 confusionMatrix(knn_dataset_under_100.teste$build_successful, predict(model_under_knn_100, knn_dataset_under_100.teste), positive="true.")
 
-trainIndex_total_undersampling_500 <- createDataPartition(under_completo_500$build_successful, p=0.80, list=FALSE)
-knn_dataset_under_500.treino <- under_completo_500[ trainIndex_total_undersampling_500,]
-knn_dataset_under_500.teste <- under_completo_500[-trainIndex_total_undersampling_500,]
+trainIndex_total_undersampling_500 <- createDataPartition(under_500_scaled$build_successful, p=0.80, list=FALSE)
+knn_dataset_under_500.treino <- under_500_scaled[ trainIndex_total_undersampling_500,]
+knn_dataset_under_500.teste <- under_500_scaled[-trainIndex_total_undersampling_500,]
 model_under_knn_500 <- train(build_successful~., data=knn_dataset_under_500.treino, trControl=t_tree, method="knn")
 confusionMatrix(knn_dataset_under_500.teste$build_successful, predict(model_under_knn_500, knn_dataset_under_500.teste), positive="true.")
 
-trainIndex_total_undersampling_50 <- createDataPartition(under_completo_50$build_successful, p=0.80, list=FALSE)
-knn_dataset_under_50.treino <- under_completo_50[ trainIndex_total_undersampling_50,]
-knn_dataset_under_50.teste <- under_completo_50[-trainIndex_total_undersampling_50,]
+trainIndex_total_undersampling_50 <- createDataPartition(under_50_scaled$build_successful, p=0.80, list=FALSE)
+knn_dataset_under_50.treino <- under_50_scaled[ trainIndex_total_undersampling_50,]
+knn_dataset_under_50.teste <- under_50_scaled[-trainIndex_total_undersampling_50,]
 model_under_knn_50 <- train(build_successful~., data=knn_dataset_under_50.treino, trControl=t_tree, method="knn")
 confusionMatrix(knn_dataset_under_50.teste$build_successful, predict(model_under_knn_50, knn_dataset_under_50.teste), positive="true.")
+
+# # Oversampling
+
+trainIndex_total_oversampling_500 <- createDataPartition(over_scaled_500$build_successful, p=0.80, list=FALSE)
+knn_dataset_over_500.treino <- over_scaled_500[ trainIndex_total_oversampling_500,]
+knn_dataset_over_500.teste <- over_scaled_500[-trainIndex_total_oversampling_500,]
+model_over_knn_500 <- train(build_successful~., data=knn_dataset_over_500.treino, trControl=t_tree, method="knn")
+confusionMatrix(knn_dataset_over_500.teste$build_successful, predict(model_over_knn_500, knn_dataset_over_500.teste), positive="true.")
+
+trainIndex_total_oversampling_100 <- createDataPartition(over_scaled_100$build_successful, p=0.80, list=FALSE)
+knn_dataset_over_100.treino <- over_scaled_100[ trainIndex_total_oversampling_100,]
+knn_dataset_over_100.teste <- over_scaled_100[-trainIndex_total_oversampling_100,]
+model_over_knn_100 <- train(build_successful~., data=knn_dataset_over_100.treino, trControl=t_tree, method="knn")
+confusionMatrix(knn_dataset_over_100.teste$build_successful, predict(model_over_knn_100, knn_dataset_over_100.teste), positive="true.")
+
+trainIndex_total_oversampling_50 <- createDataPartition(over_scaled_50$build_successful, p=0.80, list=FALSE)
+knn_dataset_over_50.treino <- over_scaled_50[ trainIndex_total_oversampling_50,]
+knn_dataset_over_50.teste <- over_scaled_50[-trainIndex_total_oversampling_50,]
+model_over_knn_50 <- train(build_successful~., data=knn_dataset_over_50.treino, trControl=t_tree, method="knn")
+confusionMatrix(knn_dataset_over_50.teste$build_successful, predict(model_over_knn_50, knn_dataset_over_50.teste), positive="true.")
 
 # # SMOTE
 
@@ -204,3 +224,75 @@ model_smote_knn <- train(build_successful~., data=knn_dataset_smote_50.treino, t
 confusionMatrix(scaled_total$build_successful, predict(model_smote_knn_500, scaled_total), positive="true.")
 
 roc.curve(knn_dataset_smote_50.teste$build_successful, predict(model_smote_knn_50, knn_dataset_smote_50.teste))
+
+# # ROSE
+
+trainIndex_total_ROSE_500 <- createDataPartition(rose_scaled_500$build_successful, p=0.80, list=FALSE)
+knn_dataset_rose_500.treino <- rose_scaled_500[ trainIndex_total_ROSE_500,]
+knn_dataset_rose_500.teste <- rose_scaled_500[-trainIndex_total_ROSE_500,]
+model_rose_500 <- train(build_successful~., data=knn_dataset_rose_500.treino, trControl=t_tree, method="knn")
+predictions_arvore_under_cv <- predict(model_under_50, newdata = arvore_dataset_under.teste)
+confusionMatrix(knn_dataset_rose_500.teste$build_successful, predict(model_rose_500, knn_dataset_rose_500.teste), positive="true.")
+
+trainIndex_total_ROSE_100 <- createDataPartition(rose_scaled_100$build_successful, p=0.80, list=FALSE)
+knn_dataset_rose_100.treino <- rose_scaled_100[ trainIndex_total_ROSE_100,]
+knn_dataset_rose_100.teste <- rose_scaled_100[-trainIndex_total_ROSE_100,]
+model_rose_100 <- train(build_successful~., data=knn_dataset_rose_100.treino, trControl=t_tree, method="knn")
+predictions_arvore_under_cv <- predict(model_under_50, newdata = arvore_dataset_under.teste)
+confusionMatrix(knn_dataset_rose_100.teste$build_successful, predict(model_rose_100, knn_dataset_rose_100.teste), positive="true.")
+
+trainIndex_total_ROSE_50 <- createDataPartition(rose_scaled_50$build_successful, p=0.80, list=FALSE)
+knn_dataset_rose_50.treino <- rose_scaled_50[ trainIndex_total_ROSE_50,]
+knn_dataset_rose_50.teste <- rose_scaled_50[-trainIndex_total_ROSE_50,]
+model_rose_50 <- train(build_successful~., data=knn_dataset_rose_50.treino, trControl=t_tree, method="knn")
+predictions_arvore_under_cv <- predict(model_under_50, newdata = arvore_dataset_under.teste)
+confusionMatrix(knn_dataset_rose_50.teste$build_successful, predict(model_rose_50, knn_dataset_rose_50.teste), positive="true.")
+
+# # ROC / PRECISION / RECALL ROSE
+
+accuracy.meas(knn_dataset_rose_500.teste$build_successful, predict(model_rose_500, knn_dataset_rose_500.teste))
+roc.curve(knn_dataset_rose_500.teste$build_successful, predict(model_rose_500, knn_dataset_rose_500.teste))
+
+accuracy.meas(knn_dataset_rose_100.teste$build_successful, predict(model_rose_100, knn_dataset_rose_100.teste))
+roc.curve(knn_dataset_rose_100.teste$build_successful, predict(model_rose_100, knn_dataset_rose_100.teste))
+
+accuracy.meas(knn_dataset_rose_50.teste$build_successful, predict(model_rose_50, knn_dataset_rose_50.teste))
+roc.curve(knn_dataset_rose_50.teste$build_successful, predict(model_rose_50, knn_dataset_rose_50.teste))
+
+# # ROC / PRECISION / RECALL SMOTE
+
+accuracy.meas(knn_dataset_smote_500.teste$build_successful, predict(model_smote_knn_500, knn_dataset_smote_500.teste))
+roc.curve(knn_dataset_smote_500.teste$build_successful, predict(model_smote_knn_500, knn_dataset_smote_500.teste))
+
+accuracy.meas(knn_dataset_smote_100.teste$build_successful, predict(model_smote_knn_100, knn_dataset_smote_100.teste))
+roc.curve(knn_dataset_smote_100.teste$build_successful, predict(model_smote_knn_100, knn_dataset_smote_100.teste))
+
+accuracy.meas(knn_dataset_smote_50.teste$build_successful, predict(model_smote_knn_50, knn_dataset_smote_50.teste))
+roc.curve(knn_dataset_smote_50.teste$build_successful, predict(model_smote_knn_50, knn_dataset_smote_50.teste))
+
+# # ROC / PRECISION / RECALL OVER
+
+accuracy.meas(knn_dataset_over_500.teste$build_successful, predict(model_over_knn_500, knn_dataset_over_500.teste))
+roc.curve(knn_dataset_over_500.teste$build_successful, predict(model_over_knn_500, knn_dataset_over_500.teste))
+
+accuracy.meas(knn_dataset_over_100.teste$build_successful, predict(model_over_knn_100, knn_dataset_over_100.teste))
+roc.curve(knn_dataset_over_100.teste$build_successful, predict(model_over_knn_100, knn_dataset_over_100.teste))
+
+accuracy.meas(knn_dataset_over_50.teste$build_successful, predict(model_over_knn_50, knn_dataset_over_50.teste))
+roc.curve(knn_dataset_over_50.teste$build_successful, predict(model_over_knn_50, knn_dataset_over_50.teste))
+
+# # ROC / PRECISION / RECALL UNDER
+
+accuracy.meas(knn_dataset_under_500.teste$build_successful, predict(model_under_knn_500, knn_dataset_under_500.teste))
+roc.curve(knn_dataset_under_500.teste$build_successful, predict(model_under_knn_500, knn_dataset_under_500.teste))
+
+accuracy.meas(knn_dataset_under_100.teste$build_successful, predict(model_under_knn_100, knn_dataset_under_100.teste))
+roc.curve(knn_dataset_under_100.teste$build_successful, predict(model_under_knn_100, knn_dataset_under_100.teste))
+
+accuracy.meas(knn_dataset_under_50.teste$build_successful, predict(model_under_knn_50, knn_dataset_under_50.teste))
+roc.curve(knn_dataset_under_50.teste$build_successful, predict(model_under_knn_50, knn_dataset_under_50.teste))
+
+# # ROC / PRECISION / RECALL COMPLETO
+
+accuracy.meas(nb_dataset_total.teste$build_successful, predict(model_knn, nb_dataset_total.teste))
+roc.curve(nb_dataset_total.teste$build_successful, predict(model_knn, nb_dataset_total.teste))

@@ -223,3 +223,9 @@ nb_dataset.teste <- travis_selecionado[-trainIndex_total,]
 model_rose_50 <- train(build_successful~., data=nb_dataset_ROSE_50.treino, trControl=t_tree, method="nb")
 predictions_arvore_under_cv <- predict(model_under_50, newdata = arvore_dataset_under.teste)
 confusionMatrix(nb_dataset.treino$build_successful, predict(model_rose_500, nb_dataset.treino), positive="true.")
+
+accuracy.meas(nb_dataset_total.teste$build_successful, predict(model_nb, nb_dataset_total.teste))
+roc.curve(nb_dataset_total.teste$build_successful, predict(model_nb, nb_dataset_total.teste))
+
+accuracy.meas(nb_dataset_under_500.teste$build_successful, predict(model_under_nb_500, nb_dataset_under_500.teste))
+roc.curve(nb_dataset_total.teste$build_successful, predict(model_nb, nb_dataset_total.teste))
